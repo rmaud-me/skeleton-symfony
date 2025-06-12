@@ -1,0 +1,35 @@
+version: 2
+updates:
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(composer): "
+    groups:
+      composer-security:
+        applies-to: security-updates
+        update-types:
+          - patch
+      composer-version:
+        applies-to: version-updates
+        update-types:
+          - major
+          - minor
+
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(docker): "
+    groups:
+      docker-security:
+        applies-to: security-updates
+        update-types:
+          - patch
+      docker-version:
+        applies-to: version-updates
+        update-types:
+          - major
+          - minor

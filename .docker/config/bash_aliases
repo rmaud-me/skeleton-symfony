@@ -1,0 +1,5 @@
+# Global
+alias ll='ls -alh --color'
+
+# Symfony
+alias console='php bin/console'

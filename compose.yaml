@@ -1,0 +1,78 @@
+networks:
+  default: ~
+  hostmanager:
+    external: true
+
+services:
+  php:
+    build:
+      context: .
+      target: skeleton_php_dev
+    container_name: skeleton-php
+    env_file:
+      - docker.env
+      - docker.env.local
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./:/srv:rw,cached
+
+      - ./.docker/config/bashrc:/root/.bashrc
+      - ./.docker/config/bash_aliases:/root/.bash_aliases
+      - ./.docker/data/history:/root/.bash_history
+
+  nginx:
+    image: nginx:1.28-alpine
+    container_name: skeleton-nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`skeleton.localhost`)"
+      - "traefik.http.routers.nginx.entryPoints=web,websecure"
+      - "traefik.http.routers.nginx.tls=true"
+    volumes:
+      - ./public:/srv/public:ro
+      - ./.docker/nginx/dev.nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - hostmanager
+      - default
+    depends_on:
+      php:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: skeleton-postgres
+    environment:
+      POSTGRES_DB: skeleton
+      POSTGRES_PASSWORD: skeleton-password
+      POSTGRES_USER: skeleton
+    ports:
+      - "54322:5432" #use by macOS user to connect directly to the database
+    volumes:
+      - postgres:/var/lib/postgresql/data:rw
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d", "skeleton", "-U", "postgres" ]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+###> symfony/mailer ###
+#  maildev:
+#    image: maildev/maildev:2.0.5
+#    container_name: skeleton-maildev
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.services.maildev.loadbalancer.server.port=1080"
+#      - "traefik.http.routers.maildev.rule=Host(`skeleton-mail.localhost`)"
+#      - "traefik.http.routers.maildev.entryPoints=web,websecure"
+#      - "traefik.http.routers.maildev.tls=true"
+#    environment:
+#      MAILDEV_IP: "::" # https://github.com/maildev/maildev/issues/484#issuecomment-2166433388
+#    networks:
+#      - default
+#      - hostmanager
+###< symfony/mailer ###
+
+volumes:
+  postgres: ~
