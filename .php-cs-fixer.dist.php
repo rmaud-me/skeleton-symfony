@@ -35,6 +35,11 @@ return (new PhpCsFixer\Config())
                 'try',
             ],
         ],
+        'yoda_style' => [
+            'always_move_variable' => false,
+            'equal' => false,
+            'identical' => false,
+        ],
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)
