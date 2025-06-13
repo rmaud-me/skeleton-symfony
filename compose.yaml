@@ -41,7 +41,7 @@ services:
         condition: service_healthy
 
   postgres:
-    image: postgres:17-alpine
+    image: postgres:17
     container_name: skeleton-postgres
     environment:
       POSTGRES_DB: skeleton
@@ -52,27 +52,29 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data:rw
     healthcheck:
-      test: [ "CMD", "pg_isready", "-d", "skeleton", "-U", "postgres" ]
+      test: [ "CMD", "pg_isready", "-d", "skeleton", "-U", "skeleton" ]
       timeout: 5s
       retries: 5
       start_period: 60s
 
-###> symfony/mailer ###
-#  maildev:
-#    image: maildev/maildev:2.0.5
-#    container_name: skeleton-maildev
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.http.services.maildev.loadbalancer.server.port=1080"
-#      - "traefik.http.routers.maildev.rule=Host(`skeleton-mail.localhost`)"
-#      - "traefik.http.routers.maildev.entryPoints=web,websecure"
-#      - "traefik.http.routers.maildev.tls=true"
-#    environment:
-#      MAILDEV_IP: "::" # https://github.com/maildev/maildev/issues/484#issuecomment-2166433388
-#    networks:
-#      - default
-#      - hostmanager
-###< symfony/mailer ###
+  mailpit:
+    image: axllent/mailpit
+    container_name: skeleton-mailpit
+    ports:
+      - "1025"
+      - "8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.maildev.loadbalancer.server.port=8025"
+      - "traefik.http.routers.maildev.rule=Host(`skeleton-mail.localhost`)"
+      - "traefik.http.routers.maildev.entryPoints=web,websecure"
+      - "traefik.http.routers.maildev.tls=true"
+    networks:
+      - default
+      - hostmanager
 
 volumes:
   postgres: ~
