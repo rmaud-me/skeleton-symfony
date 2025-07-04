@@ -90,7 +90,7 @@ RUN set -eux; \
 # Uncomment if you want rootless container
 #USER appuser
 
-FROM nginx:1.27-alpine AS skeleton_nginx
+FROM nginx:1.29-alpine AS skeleton_nginx
 
 COPY --link .docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 

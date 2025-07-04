@@ -23,7 +23,7 @@ services:
       - ./.docker/data/history:/root/.bash_history
 
   nginx:
-    image: nginx:1.28-alpine
+    image: nginx:1.29-alpine
     container_name: skeleton-nginx
     labels:
       - "traefik.enable=true"
