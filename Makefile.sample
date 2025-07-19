@@ -23,7 +23,7 @@ phpunit: ## Run phpunit tests suite
 
 cs-fixer: ## Fix cs on the project
     # Need PHP_CS_FIXER_IGNORE_ENV because php cs fixer is not fully compatible with php 8.4
-	$(DC) exec php PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --verbose
+	$(DC) exec php bash -c "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --verbose"
 	$(DC) exec php ./vendor/bin/twig-cs-fixer --fix
 
 phpstan: ## Run phpstan
