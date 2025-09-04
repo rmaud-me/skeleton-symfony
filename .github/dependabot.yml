@@ -1,3 +1,4 @@
+# This dependabot check if there are a new version of package, is not security update
 version: 2
 updates:
   - package-ecosystem: "composer" # See documentation for possible values
@@ -10,12 +11,15 @@ updates:
       composer-security:
         applies-to: security-updates
         update-types:
+          - major
+          - minor
           - patch
       composer-version:
         applies-to: version-updates
         update-types:
           - major
           - minor
+          - patch
 
   - package-ecosystem: "docker" # See documentation for possible values
     directory: "/" # Location of package manifests
@@ -27,9 +31,12 @@ updates:
       docker-security:
         applies-to: security-updates
         update-types:
+          - major
+          - minor
           - patch
       docker-version:
         applies-to: version-updates
         update-types:
           - major
           - minor
+          - patch
