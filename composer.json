@@ -7,18 +7,17 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/dbal": "*",
-        "doctrine/doctrine-bundle": "^2.14",
-        "doctrine/doctrine-migrations-bundle": "^3.4",
-        "doctrine/orm": "^3.3",
-        "phpdocumentor/reflection-docblock": "^5.6",
-        "symfony/console": "7.3.*",
-        "symfony/dotenv": "7.3.*",
-        "symfony/flex": "^2",
-        "symfony/framework-bundle": "7.3.*",
-        "symfony/monolog-bundle": "^3.10",
-        "symfony/runtime": "7.3.*",
-        "symfony/yaml": "7.3.*"
+        "doctrine/doctrine-bundle": "^3.2.2",
+        "doctrine/doctrine-migrations-bundle": "^3.7",
+        "doctrine/orm": "^3.6",
+        "phpdocumentor/reflection-docblock": "^5.6.6",
+        "symfony/console": "8.0.*",
+        "symfony/dotenv": "8.0.*",
+        "symfony/flex": "^2.10",
+        "symfony/framework-bundle": "8.0.*",
+        "symfony/monolog-bundle": "^4.0.1",
+        "symfony/runtime": "8.0.*",
+        "symfony/yaml": "8.0.*"
     },
     "config": {
         "allow-plugins": {
@@ -67,16 +66,16 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.3.*"
+            "require": "8.0.*"
         }
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.75",
-        "phpstan/phpstan": "^2.1",
-        "phpunit/phpunit": "^12.2",
-        "symfony/debug-bundle": "7.3.*",
-        "symfony/var-dumper": "7.3.*",
-        "symfony/web-profiler-bundle": "7.3.*",
-        "vincentlanglet/twig-cs-fixer": "^3.7"
+        "friendsofphp/php-cs-fixer": "^3.92.3",
+        "phpstan/phpstan": "^2.1.33",
+        "phpunit/phpunit": "^12.5.4",
+        "symfony/debug-bundle": "8.0.*",
+        "symfony/var-dumper": "8.0.*",
+        "symfony/web-profiler-bundle": "8.0.*",
+        "vincentlanglet/twig-cs-fixer": "^3.11"
     }
 }
