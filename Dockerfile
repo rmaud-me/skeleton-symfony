@@ -1,4 +1,4 @@
-FROM php:8.4-fpm AS skeleton_php_base
+FROM php:8.5-fpm AS skeleton_php_base
 
 WORKDIR /srv
 
@@ -35,9 +35,8 @@ FROM skeleton_php_base AS skeleton_php_dev
 
 COPY --link .docker/php/conf.d/20-app.dev.ini $PHP_INI_DIR/conf.d/
 
-# Fix the xdebug version because, I have SIGSEGV with the 3.4.3
 RUN set -eux; \
-	install-php-extensions xdebug-3.4.2 \
+	install-php-extensions xdebug \
     ;
 
 # Uncomment if you want rootless container

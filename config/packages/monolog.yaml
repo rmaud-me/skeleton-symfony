@@ -8,8 +8,8 @@ when@dev:
             main:
                 type: stream
                 path: php://stderr
-                level: info
-                channels: [ "!event", "!doctrine", "!console" ]
+                level: warning
+                channels: [ "!event", "!doctrine", "!console", "!deprecation" ]
                 formatter: monolog.formatter.line
             full:
                 type: rotating_file
@@ -19,7 +19,8 @@ when@dev:
             console:
                 type: console
                 process_psr_3_messages: false
-                channels: [ "!event", "!doctrine" ]
+                level: warning
+                channels: [ "!event", "!doctrine", "!deprecation", "!console" ]
             deprecation:
                 type: rotating_file
                 channels: [ deprecation ]
