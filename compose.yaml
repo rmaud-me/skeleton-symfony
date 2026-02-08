@@ -27,9 +27,9 @@ services:
     container_name: skeleton-sf-nginx
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.skeleton-nginx.rule=Host(`skeleton-sf.localhost`)"
-      - "traefik.http.routers.skeleton-nginx.entryPoints=web,websecure"
-      - "traefik.http.routers.skeleton-nginx.tls=true"
+      - "traefik.http.routers.skeleton-sf-nginx.rule=Host(`skeleton-sf.localhost`)"
+      - "traefik.http.routers.skeleton-sf-nginx.entryPoints=web,websecure"
+      - "traefik.http.routers.skeleton-sf-nginx.tls=true"
     volumes:
       - ./public:/srv/public:ro
       - ./.docker/nginx/dev.nginx.conf:/etc/nginx/conf.d/default.conf
@@ -68,10 +68,10 @@ services:
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.skeleton-maildev.loadbalancer.server.port=8025"
-      - "traefik.http.routers.skeleton-maildev.rule=Host(`skeleton-sf-mail.localhost`)"
-      - "traefik.http.routers.skeleton-maildev.entryPoints=web,websecure"
-      - "traefik.http.routers.skeleton-maildev.tls=true"
+      - "traefik.http.services.skeleton-sf-maildev.loadbalancer.server.port=8025"
+      - "traefik.http.routers.skeleton-sf-maildev.rule=Host(`skeleton-sf-mail.localhost`)"
+      - "traefik.http.routers.skeleton-sf-maildev.entryPoints=web,websecure"
+      - "traefik.http.routers.skeleton-sf-maildev.tls=true"
     networks:
       - default
       - hostmanager
