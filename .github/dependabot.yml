@@ -40,3 +40,43 @@ updates:
           - major
           - minor
           - patch
+
+  - package-ecosystem: "docker-compose" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(docker compose): "
+    groups:
+      docker-security:
+        applies-to: security-updates
+        update-types:
+          - major
+          - minor
+          - patch
+      docker-version:
+        applies-to: version-updates
+        update-types:
+          - major
+          - minor
+          - patch
+
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/.github" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(gha): "
+    groups:
+      docker-security:
+        applies-to: security-updates
+        update-types:
+          - major
+          - minor
+          - patch
+      docker-version:
+        applies-to: version-updates
+        update-types:
+          - major
+          - minor
+          - patch
