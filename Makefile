@@ -9,7 +9,7 @@ init:
 
 .PHONY : clean
 
-install: ## Install from scratch the project
+test:
 	docker compose down --remove-orphans -v --rmi all
 	rm -f ./.env.local -f ./docker.env.local -f .docker/data/history
 	sudo rm -rf ./var ./vendor
