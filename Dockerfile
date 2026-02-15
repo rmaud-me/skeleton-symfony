@@ -5,13 +5,14 @@ WORKDIR /srv
 VOLUME /srv/var
 
 # Update package list and install system dependencies
+# libcap2-bin remove it if you do not want rootless
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
 	acl \
 	git \
 	file \
 	gettext \
-#	libcap2-bin \ Needed if you want rootless
+	libcap2-bin \
     && rm -rf /var/lib/apt/lists/* \
 	;
 
@@ -39,26 +40,26 @@ RUN set -eux; \
 	install-php-extensions xdebug \
     ;
 
-# Uncomment if you want rootless container
+# Comment if you do not want rootless container
 ## CAP_FOWNER+ep /usr/bin/setfacl instruction authorize appuser to use setfacl
-#RUN adduser --disabled-password --gecos "" appuser \
-#    && chown -R appuser /srv \
-#    && setcap CAP_FOWNER+ep /usr/bin/setfacl \
-#    ;
+RUN adduser --disabled-password --gecos "" appuser \
+    && chown -R appuser /srv \
+    && setcap CAP_FOWNER+ep /usr/bin/setfacl \
+    ;
 
-# Uncomment if you want rootless container
-#USER appuser
+# Comment if you do not want rootless container
+USER appuser
 
 FROM skeleton_php_dev AS skeleton_php_prod
 
 ENV APP_ENV=prod
 
-# Uncomment if you want rootless container
+# Comment if you do not want rootless container
 ## CAP_FOWNER+ep /usr/bin/setfacl instruction authorize appuser to use setfacl
-#RUN adduser --disabled-password --gecos "" appuser \
-#    && chown -R appuser /srv \
-#    && setcap CAP_FOWNER+ep /usr/bin/setfacl \
-#    ;
+RUN adduser --disabled-password --gecos "" appuser \
+    && chown -R appuser /srv \
+    && setcap CAP_FOWNER+ep /usr/bin/setfacl \
+    ;
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link .docker/php/conf.d/20-app.prod.ini $PHP_INI_DIR/conf.d/
@@ -86,8 +87,8 @@ RUN set -eux; \
 #    bin/console asset-map:compile;
 ###< Build assets ###
 
-# Uncomment if you want rootless container
-#USER appuser
+# Comment if you do not want rootless container
+USER appuser
 
 FROM nginx:1.29-alpine AS skeleton_nginx
 
